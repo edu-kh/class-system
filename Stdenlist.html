@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="Style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+      
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="sidebar-backdrop" onclick="toggleSidebar()" 
+         class="fixed inset-0 bg-black/50 lg:hidden">
+    </div>
+
+    <div id="main-layout" class="flex h-screen w-full">
+
+        <div id="sidebar" class="bg-[--sidebar-color] text-gray-300 w-64 h-full space-y-4 flex flex-col p-4">
+            
+            <div class="py-4 px-2 text-xl font-bold text-white border-b border-gray-700/50">
+                 © MR. PIN KOY
+            </div>
+
+            <button onclick="toggleSidebar()" class="lg:hidden absolute top-4 right-4 text-white hover:text-red-400 z-50">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <nav class="flex-grow space-y-1 overflow-y-auto">
+                <a href="index.html"  data-target="dashboard" class="sidebar-link  flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="layout-dashboard" class="icon w-5 h-5 mr-3"></i>
+                    Dashboard
+                </a>
+
+                <div id="students-dropdown-parent">
+                    <button onclick="toggleDropdown('students-dropdown')" 
+                            class="sidebar-link w-full text-left flex justify-between items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                        <span class="flex items-center">
+                            <i data-lucide="users" class="icon w-5 h-5 mr-3"></i>
+                            Students
+                        </span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200" id="students-dropdown-icon"></i>
+                    </button>
+                    
+                    <div id="students-dropdown" class="pl-6 space-y-1 hidden">
+                     <!--  <a href="#" onclick="setActiveLink(event); showContent('default-view');" data-target="students-list" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="list-checks" class="icon w-5 h-5 mr-3"></i>
+                            Student List
+                        </a> --> 
+                        <a href="addstudent.html"  data-target="add-student" class="sidebar-link active flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="list-checks" class="icon w-5 h-5 mr-3"></i>
+                            Student List
+                        </a>
+                        <a href="scoreform.html" target="_blank" data-target="add-score" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="clipboard-list" class="icon w-5 h-5 mr-3"></i>
+                            Add Score
+                        </a>
+                        <a href="Attendance.html" target="_blank" data-target="add-attendance" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="clipboard-check" class="icon w-5 h-5 mr-3"></i>
+                            Add Attendance
+                        </a>
+                    </div>
+                </div>
+                <a href="Honorabl.html"  data-target="attendance" class="sidebar-link  flex items-center p-3 text-sm font-medium rounded-lg transition duration-150">
+                    <i data-lucide="trophy" class="icon w-5 h-5 mr-3"></i>
+                    Honorable Chart
+                </a>
+
+                <a href="Result.html"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="graduation-cap" class="icon w-5 h-5 mr-3"></i>
+                    Results 
+                </a>
+                <a href="Report.html"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="bar-chart-3" class="icon w-5 h-5 mr-3"></i>
+                   Report Attendance
+                </a>
+                    <!--  <a href="#"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="book-open-text" class="icon w-5 h-5 mr-3"></i>
+                    Subjects Plan
+                </a> v--> 
+                 <!-- CLASS PLAN DROPDOWN -->
+<div id="classplan-dropdown-parent" class="mt-1">
+    <button onclick="toggleDropdown('classplan-dropdown')" 
+        class="sidebar-link w-full text-left flex justify-between items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+
+        <span class="flex items-center">
+            <i data-lucide="pencil" class="icon w-5 h-5 mr-3"></i>
+            Class Plan
+        </span>
+
+        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"
+           id="classplan-dropdown-icon"></i>
+    </button>
+
+    <div id="classplan-dropdown" class="pl-6 space-y-1 hidden">
+        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/edit?usp=sharing" target="_blank" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+            <i class="fa-solid fa-table icon w-5 h-5 mr-3"></i>
+            Sheet
+        </a>
+
+        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/export?format=pdf&size=A4&portrait=true&fitw=true&top_margin=0.25&bottom_margin=0.25&left_margin=0.25&right_margin=0.25&horizontal_alignment=CENTER&vertical_alignment=MIDDLE&gridlines=false&printtitle=false&sheetnames=false&pagenumbers=false"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+            <i class="fa-regular fa-file-pdf icon w-5 h-5 mr-3"></i>
+            Get PDF
+        </a>
+    </div>
+</div>
+                <a href="https://docs.google.com/spreadsheets/d/1kHfumXIbIyauIPgZeaJy5n_wtQWG9qy5INqO7PsaDN0/edit?usp=sharing" onclick="setActiveLink(event)" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="sheet" class="icon w-5 h-5 mr-3"></i>
+                    Sheets
+                </a>
+             
+            </nav>
+        </div>
+
+        <div id="main-content" class="flex-grow flex flex-col overflow-hidden">
+            
+            <header id="header" class="bg-white shadow-md p-4 flex justify-between items-center lg:pl-8">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-600 hover:text-gray-900">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <h1 class="hidden lg:block text-2xl font-semibold text-gray-800" id="main-header-title">Dashboard</h1>
+                <div class="flex-grow lg:flex-grow-0"></div> <div class="text-sm text-gray-600 font-medium flex items-center space-x-1 ml-auto">
+                      <p>ថ្នាក់ទី </p>  <span id="grage-name">....</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+            </header>
+
+            <main id="content-area" class="p-4 sm:p-6 lg:p-8 flex-grow overflow-y-auto">
+
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 block lg:hidden mb-3 sm:mb-0" id="mobile-header-title">Dashboard</h2>
+                    
+                   <button onclick="showContent('iframe-form')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 flex items-center w-full sm:w-auto">
+                        <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
+                       Add Student
+                    </button>
+
+                
+                </div>
+
+                <div id="editStudentModal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 z-50 justify-center items-center p-4" style="display: none;">
+                    <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden">
+                        <div class="p-6 border-b flex justify-between items-center">
+                            <h3 class="text-xl font-semibold text-gray-800">Edit Student Record</h3>
+                            <button onclick="hideModal('editStudentModal')" class="text-gray-500 hover:text-gray-800">
+                                <i data-lucide="x" class="w-6 h-6"></i>
+                            </button>
+                        </div>
+                        <div id="edit-form-container" class="p-6">
+                            <p class="text-center text-gray-500">Loading student details...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dashboard-view" class="space-y-8">
+                    
+                  
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
+                        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200 flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Students</p>
+                                <p id="stat-total" class="text-3xl font-semibold text-gray-900 mt-1">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                                <i data-lucide="users-2" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200 flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Female Students</p>
+                                <p id="stat-female" class="text-3xl font-semibold text-gray-900 mt-1">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-pink-100 text-pink-600">
+                                <i data-lucide="person-standing" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200 flex flex-col items-center justify-center">
+                            <p class="text-sm font-medium text-gray-500 mb-3">Your Profile Image</p>
+                            <img src="teacher.png" alt="Teacher Profile" class="teacher-profile-card border-4 border-gray-200 shadow-md">
+                            <p class="text-xs text-gray-500 mt-2">Dharmeshbhai</p>
+                        </div>
+                        </div>
+                    
+               
+
+                </div>
+                <div id="default-view" class="hidden bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-gray-200">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 border-b pb-3 hidden lg:block">Student List</h3>
+                    
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 student-list-font">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[70px]">ល.រ</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">ឈ្មោះ</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[70px]">ថ្នាក់ទី</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">ថ្ងៃខែឆ្នាំកំណើត</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">លេខទូរសព្ទ</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[90px]">ភេទ</th>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[90px]">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="student-list-tbody" class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td colspan="7" class="text-center py-8 text-gray-500">
+                                        <i data-lucide="loader-circle" class="w-8 h-8 mx-auto text-indigo-500 mb-2 animate-spin"></i>
+                                        Fetching student data...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+              
+
+                <div id="iframe-form" class="hidden w-full bg-white rounded-xl shadow-lg border border-gray-200">
+                    <div class="p-4 border-b">
+                        <button onclick="showContent('default-view')" class="text-indigo-600 hover:text-indigo-800 font-medium py-1 px-2 rounded-lg transition duration-150 flex items-center">
+                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                            Back to Student List
+                        </button>
+                    </div>
+                    
+                    <iframe id="studentIframe" 
+                            src="Studentinfo.html" 
+                            class="w-full" 
+                            style="min-height: 80vh; border: none;">
+                    </iframe>
+                </div>
+                </main>
+        </div>
+
+    </div>
+
+   
+<script>
+// Mock function for "Print Sheet" (using window.open is preferred over the function)
+// function printSheet() {
+//   window.open("https://docs.google.com/spreadsheets/d/1-mgjZSvvT6UgR3qnSCN10xi5shj39F81XzRNVCxG6xA/edit?gid=0#gid=0");
+// }
+</script>
+
+<script>
+        // --- Configuration ---
+        // !!! IMPORTANT: The URL below is derived from your Student info.html file (the form's submission URL).
+        // It is used for both GET (fetching the list) and POST (update/delete/create).
+         const WEB_APP_URL_POST = 'https://script.google.com/macros/s/AKfycbz5eSzEkozWjpXsw27HDOLZ0x9BVrku5Kk2FzlqvmnLLtwmz9aWf5zR4i9D65SHi74k8g/exec'; 
+        const FETCH_DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5eSzEkozWjpXsw27HDOLZ0x9BVrku5Kk2FzlqvmnLLtwmz9aWf5zR4i9D65SHi74k8g/exec'; 
+        const IFRAME_FORM_URL = 'Studentinfo.html'; // Set the iframe source to your local form file
+
+        // Column headers for the student list table (must match doGet response structure)
+        const STUDENT_TABLE_HEADERS = [
+            'name', 
+            'grade', 
+            'dob', 
+            'phone', 
+            'sex'
+        ];
+
+        // Initialize Lucide icons after the DOM is loaded
+        window.onload = function() {
+            lucide.createIcons();
+            
+            // 1. Show the Student List view (as requested previously)
+            showContent('dashboard-view'); 
+            showContent('default-view'); 
+            
+            // 2. OPEN THE STUDENTS DROPDOWN ON LOAD
+            const dropdownContent = document.getElementById('students-dropdown');
+            const dropdownIcon = document.getElementById('students-dropdown-icon');
+
+            if (dropdownContent) {
+                dropdownContent.classList.remove('hidden');
+            }
+            if (dropdownIcon) {
+                dropdownIcon.classList.add('rotate-180');
+            }
+        };
+
+        // --- Utility Functions ---
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-open');
+        }
+
+        function showModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function hideModal(id) {
+            document.getElementById(id).style.display = 'none';
+            // Always refresh the list and stats when closing the edit modal
+            if (id === 'editStudentModal') {
+                fetchStudentList();
+                fetchStudentStats();
+            }
+        }
+        
+        /**
+         * Toggles the visibility of a sidebar dropdown menu and rotates the icon.
+         * @param {string} dropdownId - The ID of the dropdown content container.
+         */
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            const icon = document.getElementById(`${dropdownId}-icon`);
+            
+            if (dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                dropdown.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+            lucide.createIcons();
+        }
+
+        // --- Stats Calculation (Updated) ---
+
+      // ... (Lines 359 - 389 remain the same)
+        /**
+         * Fetches the student list and calculates/displays dashboard statistics.
+         */
+        /**
+ * Fetches the student list and calculates/displays dashboard statistics.
+ */
+async function fetchStudentStats() {
+    // Display loading state
+    document.getElementById('stat-total').textContent = '...';
+    document.getElementById('stat-female').textContent = '...';
+    document.getElementById('grage-name').textContent = 'Loading...'; 
+    
+    try {
+        const response = await fetch(FETCH_DATA_WEB_APP_URL);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            const students = data.data;
+            
+            // Note: 'sex' is the key from your Apps Script HEADERS
+            const totalStudents = students.length;
+            
+            // 🐛 FIX APPLIED HERE: Must check for both values explicitly
+            const femaleStudents = students.filter(s => 
+                s.sex && (s.sex.toLowerCase() === 'ស' || s.sex.toLowerCase() === 'ស្រី')
+            ).length;
+            
+            // Update DOM
+            document.getElementById('stat-total').textContent = totalStudents;
+            document.getElementById('stat-female').textContent = femaleStudents;
+            
+            // Display the systemGrade from the Apps Script response
+            document.getElementById('grage-name').textContent = data.systemGrade || 'N/A.'; 
+            
+        } else {
+            console.error('Error fetching stats:', data.message);
+            document.getElementById('stat-total').textContent = 'Error';
+            document.getElementById('stat-female').textContent = 'Error';
+            document.getElementById('grage-name').textContent = 'Error'; 
+        }
+
+    } catch (error) {
+        console.error('Network error loading stats:', error);
+        document.getElementById('stat-total').textContent = 'Fail';
+        document.getElementById('stat-female').textContent = 'Fail';
+        document.getElementById('grage-name').textContent = 'Fail'; 
+    }
+}
+// ... (The rest of your script remains the same)
+        
+        // --- CRUD Actions ---
+
+        /**
+         * Sends an AJAX request to the Apps Script for Update or Delete.
+         * The payload MUST include {action: 'update'|'delete', rowIndex: X, ...}
+         */
+        async function sendActionRequest(payload) {
+            const response = await fetch(WEB_APP_URL_POST, {
+                method: 'POST',
+                // Content-Type MUST be text/plain for Apps Script to properly parse the JSON body
+                headers: { 'Content-Type': 'text/plain' }, 
+                body: JSON.stringify(payload)
+            });
+            return response.json();
+        }
+
+        /**
+         * Deletes a student record after confirmation.
+         * @param {number} rowIndex The 1-based row number of the student in the sheet to delete.
+         * @param {string} studentName The student's name for confirmation message.
+         */
+        async function deleteStudent(rowIndex, studentName) {
+            const confirmed = window.confirm(`Are you sure you want to delete ${studentName} (Row ${rowIndex})? This cannot be undone.`);
+            if (!confirmed) {
+                return;
+            }
+
+            try {
+                const deleteButton = event.currentTarget;
+                const originalText = deleteButton.innerHTML;
+                deleteButton.disabled = true;
+                deleteButton.innerHTML = `<i data-lucide="loader-circle" class="w-4 h-4 inline-block align-text-bottom animate-spin"></i> Deleting...`;
+                lucide.createIcons();
+
+                const payload = {
+                    action: 'delete',
+                    rowIndex: rowIndex
+                };
+
+                const result = await sendActionRequest(payload);
+
+                if (result.status === 'success') {
+                    alert(`Successfully deleted student: ${studentName}.`);
+                    // Refresh the list and stats after successful deletion
+                    fetchStudentList();
+                    fetchStudentStats();
+                } else {
+                    alert(`Deletion failed: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error during deletion:', error);
+                alert('A network error occurred during deletion.');
+            } finally {
+                // The list refresh will re-enable the button implicitly, 
+                // but we reset it just in case of a failure.
+                if (event.currentTarget) {
+                    event.currentTarget.disabled = false;
+                    event.currentTarget.innerHTML = originalText;
+                    lucide.createIcons();
+                }
+            }
+        }
+
+
+        /**
+         * Initiates the Edit process: retrieves student data and displays the form in a modal.
+         * @param {Object} studentData - The full data object of the student to edit, including rowIndex.
+         */
+        function editStudent(studentData) {
+            const container = document.getElementById('edit-form-container');
+            const studentName = studentData.name || 'Student';
+
+            container.innerHTML = `
+                <form id="editForm" class="space-y-4">
+                    <p class="text-sm text-gray-700 font-semibold border-b pb-2 mb-4">Editing Record for: ${studentName} (Row Index: ${studentData.rowIndex})</p>
+                    
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="rowIndex" value="${studentData.rowIndex}">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="edit_name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                            <input type="text" id="edit_name" name="name" value="${studentData.name || ''}" 
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="edit_sex" class="block text-sm font-medium text-gray-700">Sex</label>
+                            <select id="edit_sex" name="sex"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="ប្រុស" ${studentData.sex === 'ប្រុស' ? 'selected' : ''}>ប្រុស (Male)</option>
+                                <option value="ស្រី" ${studentData.sex === 'ស្រី' ? 'selected' : ''}>ស្រី (Female)</option>
+                                <option value="" ${!studentData.sex ? 'selected' : ''}>- Select -</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="edit_dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                            <input type="text" id="edit_dob" name="dob" value="${studentData.dob || ''}" 
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="DD/MM/YYYY">
+                        </div>
+                        <div>
+                            <label for="edit_grade" class="block text-sm font-medium text-gray-700">Grade/Class</label>
+                            <input type="text" id="edit_grade" name="grade" value="${studentData.grade || ''}" 
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <div>
+                            <label for="edit_phone" class="block text-sm font-medium text-gray-700">Student Phone</label>
+                            <input type="text" id="edit_phone" name="phone" value="${studentData.phone || ''}" 
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                         <div>
+                            <label for="edit_eng" class="block text-sm font-medium text-gray-700">Guardian Phone</label>
+                            <input type="text" id="edit_eng" name="eng" value="${studentData.eng || ''}" 
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t flex justify-end">
+                        <button type="button" onclick="hideModal('editStudentModal')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg mr-2 transition duration-150">Cancel</button>
+                        <button type="submit" id="saveEditButton" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition duration-150">
+                            <i data-lucide="save" class="w-5 h-5 mr-2 inline-block align-text-bottom"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            `;
+            lucide.createIcons();
+            showModal('editStudentModal');
+
+            // --- Form Submission Logic for Edit ---
+            document.getElementById('editForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const form = e.target;
+                const button = document.getElementById('saveEditButton');
+                
+                const formData = new FormData(form);
+                const payload = {};
+                formData.forEach((value, key) => {
+                    // Collect all form data into the payload object
+                    payload[key] = value;
+                });
+                
+                // Add hidden fields like device, mail, AdmissionDate from original data to payload 
+                // to ensure they are not cleared by the Apps Script update, 
+                // as the form doesn't include them.
+                payload.device = studentData.device || ''; 
+                payload.mail = studentData.mail || ''; 
+                payload.AdmissionDate = studentData.AdmissionDate || ''; // Keep original timestamp/date
+                
+                try {
+                    button.disabled = true;
+                    button.innerHTML = `<i data-lucide="loader-circle" class="w-5 h-5 mr-2 inline-block align-text-bottom animate-spin"></i> Saving...`;
+                    lucide.createIcons();
+
+                    const result = await sendActionRequest(payload);
+                    
+                    if (result.status === 'success') {
+                        alert(`Successfully updated student: ${studentName}.`);
+                        hideModal('editStudentModal'); // This will trigger a list refresh
+                    } else {
+                        alert(`Update failed: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error during update:', error);
+                    alert('A network error occurred during update.');
+                } finally {
+                    button.disabled = false;
+                    button.innerHTML = `<i data-lucide="save" class="w-5 h-5 mr-2 inline-block align-text-bottom"></i> Save Changes`;
+                    lucide.createIcons();
+                }
+            });
+        }
+
+
+        /**
+         * Fetches the student list from the Google Apps Script Web App and populates the table.
+         */
+        async function fetchStudentList() {
+            const tbody = document.getElementById('student-list-tbody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="text-center py-8 text-gray-500">
+                        <i data-lucide="loader-circle" class="w-8 h-8 mx-auto text-indigo-500 mb-2 animate-spin"></i>
+                        Fetching student data...
+                    </td>
+                </tr>
+            `;
+            lucide.createIcons();
+            
+            try {
+                const response = await fetch(FETCH_DATA_WEB_APP_URL);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    const students = data.data;
+                    if (students.length === 0) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center py-8 text-gray-500">
+                                    <i data-lucide="info" class="w-6 h-6 mx-auto text-gray-500 mb-2"></i>
+                                    No student records found in the sheet.
+                                </td>
+                            </tr>
+                        `;
+                    } else {
+                        tbody.innerHTML = students.map((student, index) => {
+                            // Safely extract values for the table columns
+                            const rowDataHtml = [
+                                `<td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${index + 1}</td>`, // Sequential #
+                                `<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">${student.name || '-'}</td>`, // ឈ្មោះ
+                                `<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.grade || '-'}</td>`, // ថ្នាក់
+                                `<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.dob || '-'}</td>`, // ថ្ងៃខែឆ្នាំកំណើត
+                                `<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.phone || '-'}</td>`, // លេខទូរសព្ទ
+                                `<td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.sex || '-'}</td>`, // ភេទ
+                            ].join('');
+
+                            return `
+                                <tr class="hover:bg-gray-50 transition duration-150">
+                                    ${rowDataHtml}
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button onclick='editStudent(${JSON.stringify(student)})' class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                            <i data-lucide="pencil" class="w-4 h-4 inline-block align-text-bottom"></i> Edit
+                                        </button>
+                                        <button onclick="deleteStudent(${student.rowIndex}, '${String(student.name || '').replace(/'/g, "\\'")}')" class="text-red-600 hover:text-red-900">
+                                            <i data-lucide="trash" class="w-4 h-4 inline-block align-text-bottom"></i> Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('');
+                    }
+                } else {
+                    throw new Error(data.message || 'Error fetching data from script.');
+                }
+
+            } catch (error) {
+                console.error('Error loading student list:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-red-600">
+                            <i data-lucide="alert-triangle" class="w-8 h-8 mx-auto mb-2"></i>
+                            Failed to load data. Check console (F12) for details.
+                        </td>
+                    </tr>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // --- View Switching Functions (No change needed) ---
+        
+        function showContent(contentId) {
+            const views = {
+                'dashboard-view': document.getElementById('dashboard-view'),
+                'default-view': document.getElementById('default-view'),
+                'iframe-form': document.getElementById('iframe-form')
+            };
+            
+            const mainHeaderTitle = document.getElementById('main-header-title');
+            const mobileHeaderTitle = document.getElementById('mobile-header-title');
+            
+            // Hide all views
+            Object.values(views).forEach(view => view.classList.add('hidden'));
+
+            // Show the requested view
+            const targetView = views[contentId];
+            if (targetView) {
+                targetView.classList.remove('hidden');
+            }
+
+            // Update headers and trigger data fetch
+            if (contentId === 'iframe-form') {
+                mainHeaderTitle.textContent = 'Add New Student';
+                mobileHeaderTitle.textContent = 'Add New Student';
+                // Set the iframe source if not already set
+                document.getElementById('studentIframe').src = IFRAME_FORM_URL;
+            } else if (contentId === 'default-view') {
+                mainHeaderTitle.textContent = 'Student List';
+                mobileHeaderTitle.textContent = 'Student List';
+                fetchStudentList(); // Load data for list
+            } else if (contentId === 'dashboard-view') {
+                mainHeaderTitle.textContent = 'Dashboard';
+                mobileHeaderTitle.textContent = 'Dashboard';
+                fetchStudentStats(); // Load data for stats
+            }
+            lucide.createIcons();
+        }
+
+
+        function setActiveLink(event) {
+            event.preventDefault();
+            const links = document.querySelectorAll('.sidebar-link');
+            links.forEach(link => {
+                // Ensure only direct links (A tags) are checked for 'active' status removal
+                if (link.tagName === 'A') {
+                     link.classList.remove('active');
+                }
+                // Also remove 'active' from the dropdown button
+                if (link.tagName === 'BUTTON' && link.closest('#students-dropdown-parent')) {
+                    link.classList.remove('active');
+                }
+            });
+            
+            const clickedElement = event.currentTarget;
+            
+            // 1. Set the clicked link/button as active
+            clickedElement.classList.add('active');
+
+            // 2. If a link inside the 'Students' dropdown was clicked, make the parent button active too.
+            const dropdownParent = document.getElementById('students-dropdown-parent');
+            if (clickedElement.tagName === 'A' && dropdownParent.contains(clickedElement)) {
+                const dropdownButton = dropdownParent.querySelector('button');
+                if (dropdownButton) {
+                    dropdownButton.classList.add('active');
+                }
+            }
+
+            // 3. Handle closing the sidebar on mobile and ensure content switching
+            if (document.body.classList.contains('sidebar-open')) {
+                toggleSidebar();
+            }
+        }
+    </script>
+</body>
+</html>

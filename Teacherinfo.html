@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Moul&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Battambang&family=Moul&display=swap" rel="stylesheet">
+  <title>Teacher's info</title>
+ <style>
+    * { 
+      box-sizing: border-box; 
+    }
+
+    /* Base setup for body and fonts */
+    body {
+      background: #ccdaeb;
+      margin: 0;
+      padding: 10px; /* Reduced padding for smaller screens */
+      display: flex;
+      justify-content: center;
+      font-family: "Battambang", system-ui, Arial, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 16px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #c8dcef;
+      max-width: 750px;
+      width: 100%;
+      padding: 20px; /* Reduced padding */
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    /* Logo handling (if you decide to use one) */
+    .logo {
+      width: 150px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+    }
+   
+    h2 {
+      text-align: center;
+      margin: 10px 0 15px; /* Adjusted margin */
+      color: #333;
+    }
+
+    /* --- Form Layout --- */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .form-group {
+      flex: 1 1 calc(50% - 10px); /* 50% width on larger screens */
+      margin-bottom: 15px;
+      min-width: 250px; /* Ensures fields don't get too narrow on medium screens */
+    }
+
+    .form-group-full {
+      flex: 1 1 100%;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #dfe9eb;
+      font-family: inherit; /* Inherit font from body */
+      background-color: #e6eff7;
+    }
+
+    /* Sex options */
+    .sex-options {
+      display: flex;
+      gap: 15px; /* Increased gap */
+      margin-top: 6px;
+    }
+
+    .sex-option {
+      flex-grow: 1; /* Allows options to fill available space */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #eaeaea;
+      transition: background 0.3s;
+    }
+
+    .sex-option:hover {
+      background-color: #d0e2ff;
+    }
+
+    .sex-option input[type="checkbox"] {
+      transform: scale(1.2);
+      width: auto; /* Override 100% width */
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+      flex-direction: row; /* Default to row */
+    }
+
+    button {
+      flex: 1;
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(to bottom, #4f8ef7, #1e60d4);
+      box-shadow: 0 4px #0f3c8c;
+      transition: all 0.15s ease-in-out;
+      font-family: inherit;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px #0f3c8c;
+    }
+
+    #clearBtn {
+      background: linear-gradient(to bottom, #ccc, #888);
+      box-shadow: 0 4px #555;
+    }
+
+    #clearBtn:hover {
+      box-shadow: 0 6px #333;
+    }
+
+    .message {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    
+    /* --- Result Display Styles (for responsiveness) --- */
+    .result-display {
+      margin-top: 30px;
+      padding: 15px;
+      border: 2px solid #1e60d4;
+      border-radius: 8px;
+      background-color: #f7fbff;
+      display: none;
+    }
+
+    .result-display h3 {
+      font-size: 1.1rem;
+    }
+
+    .result-item {
+      display: flex;
+      flex-wrap: wrap; /* Allows label and value to wrap on small screens */
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dotted #e0e0e0;
+    }
+    
+    .result-label {
+      font-weight: bold;
+      color: #555;
+      flex-basis: 40%; /* Give label space */
+    }
+
+    .result-value {
+      text-align: right;
+      flex-basis: 60%; /* Give value space */
+      word-break: break-word; /* Prevents long words/emails from overflowing */
+    }
+
+    /* ================================================= */
+    /* MEDIA QUERIES (MOBILE OPTIMIZATION)     */
+    /* ================================================= */
+
+    @media (max-width: 550px) {
+      /* Force single column layout for all form groups on small phones */
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-group {
+        flex: 1 1 100%; /* Take up full width */
+        min-width: unset;
+      }
+
+      /* Stack buttons vertically on small phones */
+      .button-group {
+        flex-direction: column;
+      }
+      
+      /* Make result items stack better on small screens */
+      .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .result-label, .result-value {
+        flex-basis: 100%;
+        text-align: left;
+      }
+      
+      .result-label {
+          margin-bottom: 2px;
+      }
+      
+      .result-value {
+          font-weight: bold;
+          color: #333;
+      }
+    }
+    label span{
+      color: rgb(154, 13, 13);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+   <h2>ព័ត៌មានគ្រូ</h2>
+
+  <div class="result-display" id="resultDisplay">
+    <h3>ព័ត៌មានដែលបានរក្សាទុក</h3>
+    <div class="result-item"><span class="result-label">ស្ថានភាព</span><span class="result-value" id="resStatus"></span></div>
+    <div class="result-item"><span class="result-label">ឈ្មោះពេញ</span><span class="result-value" id="resName"></span></div>
+    <div class="result-item"><span class="result-label">ភេទ</span><span class="result-value" id="resSex"></span></div>
+    <div class="result-item"><span class="result-label">អង្គភាព (លេខសម្គាល់)</span><span class="result-value" id="resMail"></span></div>
+    <div class="result-item"><span class="result-label">សាលារៀន</span><span class="result-value" id="resDevice"></span></div>
+    <div class="result-item"><span class="result-label">បន្ទុកថ្នាក់ទី</span><span class="result-value" id="resGrade"></span></div>
+    <div class="result-item"><span class="result-label">ឯកទេស</span><span class="result-value" id="resEng"></span></div>
+    <div class="result-item"><span class="result-label">លេខទូរសព្ទ</span><span class="result-value" id="resPhone"></span></div>
+    <div class="result-item"><span class="result-label">ឆ្នាំសិក្សា</span><span class="result-value" id="resDob"></span></div>
+    <div class="result-item"><span class="result-label">ថ្ងៃ/ម៉ោងរក្សាទុក</span><span class="result-value" id="resDate"></span></div>
+  </div>
+ 
+ <!-- <img src="teacher.png" alt="Teacher Logo" class="logo" /> -->
+ 
+ 
+
+  <form id="signupForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">ឈ្មោះពេញ<span> *</span></label>
+        <input type="text" name="name" id="name" placeholder="គោលនាម និងនាម" required />
+      </div>
+      <div class="form-group">
+        <label>ភេទ <span> *</span></label required>
+        <div class="sex-options">
+          <div class="sex-option">
+            <span>ប្រុស</span>
+            <input type="checkbox" name="sex" value="ប្រុស" onclick="onlyOne(this)">
+          </div>
+          <div class="sex-option">
+            <span>ស្រី</span>
+            <input type="checkbox" name="sex" value="ស្រី" onclick="onlyOne(this)">
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="dob">ឆ្នាំសិក្សា<span> *</span></label>
+        <input type="text" name="dob" id="dob" value="២០២៥-២០២៦" required />
+      </div>
+      <div class="form-group">
+        <label for="grade">បន្ទុកថ្នាក់ទី<span> *</span></label>
+        <input name="grade" id="grade" placeholder="e.g ៧A" required>
+          
+      </div>
+    </div>
+
+      <div class="form-row">
+       <div class="form-group">
+        <label for="device">សាលារៀន<span> *</span></label required>
+        <input name="device" id="device" value="វិទ្យាល័យ ហ៊ុនសែន មិត្តភាព" required>
+          
+         
+        </select>
+        </div>
+      <div class="form-group">
+        <label for="mail">អង្គភាព<span> </span></label>
+        <input name="mail" id="mail" value="មន្ទីរអប់រំយុវជន និងកីឡាខេត្តព្រះសីហនុ" >
+          
+      </div>
+      </div>
+
+      <div class="form-row">
+       <div class="form-group">
+        <label for="eng">ឯកទេស<span> *</span></label >
+        <input name="eng" id="eng" >
+         
+        </div>
+        
+      <div class="form-group">
+        <label for="phone">លេខទូរសព្ទ<span> *</span></label >
+      <input type="tel" name="phone" id="phone"  /> 
+      </div>
+      </div>
+
+    
+
+    <div class="button-group">
+      <button type="button" id="clearBtn">សម្អាត</button>
+      <button type="submit">រក្សាទុក</button>
+    </div>
+
+    <div class="message" id="messageBox"></div>
+  </form>
+
+
+
+</div>
+
+
+
+  
+  
+  
+
+<script>
+  // ... (onlyOne function remains the same) ...
+  function onlyOne(checkbox) {
+    const checkboxes = document.getElementsByName('sex');
+    checkboxes.forEach((cb) => {
+      if (cb !== checkbox) cb.checked = false;
+    });
+  }
+
+  const form = document.getElementById("signupForm");
+  const clearBtn = document.getElementById("clearBtn");
+  const messageBox = document.getElementById("messageBox");
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const resultDisplay = document.getElementById("resultDisplay");
+
+  // IMPORTANT: You must update the scriptURL with your new deployment's URL
+  const scriptURL = "https://script.google.com/macros/s/AKfycbx9wWwMY5cqqvaazzazHE0Y-cmy-H8dSL_1e2OAtD1Q2AQn4e3QBkvDzUf1rSWfPoiEfw/exec";
+  
+  const LOCAL_STORAGE_KEY = 'lastTeacherSubmissionData'; // Key for localStorage
+
+  function displayResults(data) {
+    document.getElementById('resStatus').textContent = data.status === 'Updated' ? 'បានធ្វើបច្ចុប្បន្នភាព' : 'បានបន្ថែមថ្មី';
+    document.getElementById('resName').textContent = data.name;
+    document.getElementById('resSex').textContent = data.sex;
+    document.getElementById('resMail').textContent = data.mail;
+    document.getElementById('resDevice').textContent = data.device;
+    document.getElementById('resGrade').textContent = data.grade;
+    document.getElementById('resEng').textContent = data.eng;
+    document.getElementById('resPhone').textContent = data.phone;
+    document.getElementById('resDob').textContent = data.dob;
+    document.getElementById('resDate').textContent = data.date;
+
+    resultDisplay.style.display = 'block'; // Show the result box
+  }
+
+  // New function: Save data to browser's local storage
+  function saveDataToLocalStorage(data) {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+      console.log('Data saved to localStorage.');
+    } catch (e) {
+      console.error('Could not save to localStorage:', e);
+    }
+  }
+
+  // New function: Load data from browser's local storage on page load
+  function loadDataFromLocalStorage() {
+    try {
+      const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedData) {
+        const data = JSON.parse(storedData);
+        displayResults(data);
+        
+        // Show the message box to confirm the loaded status
+        if (data.status === "Updated") {
+            messageBox.textContent = `💾 ព័ត៌មានពីមុនត្រូវបានបង្ហាញ។ (${data.mail})`;
+        } else {
+            messageBox.textContent = `💾 ព័ត៌មានពីមុនត្រូវបានបង្ហាញ។`;
+        }
+      }
+    } catch (e) {
+      console.warn('No stored data or error parsing localStorage:', e);
+    }
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Reset UI state
+    submitBtn.disabled = true;
+    submitBtn.textContent = "កំពុងរក្សាទុក...";
+    messageBox.textContent = "";
+    resultDisplay.style.display = 'none';
+
+    const formData = new FormData(form);
+    const sexChecked = [...document.querySelectorAll('input[name="sex"]:checked')]
+      .map(input => input.value)
+      .join(", ");
+    formData.set("sex", sexChecked);
+
+    const params = new URLSearchParams(formData);
+
+    fetch(scriptURL, {
+      method: "POST",
+      body: params
+    })
+    .then(response => response.json()) 
+    .then(data => {
+      // 1. Save data to local storage
+      saveDataToLocalStorage(data);
+      
+      // 2. Display the received data
+      displayResults(data);
+      
+      // 3. Clear the form fields
+      form.reset(); 
+
+      // 4. Update message box LAST so it stays visible
+      if (data.status === "Updated") {
+        messageBox.textContent = `✅ ធ្វើបច្ចុប្បន្នភាពបានជោគជ័យ! (${data.mail})`;
+      } else {
+        messageBox.textContent = "⭐ បន្ថែមបានជោគជ័យ!";
+      }
+    })
+    .catch((error) => {
+      console.error("Error!", error);
+      // Ensure message box is updated on error
+      messageBox.textContent = "❌ ការរក្សាទុកបរាជ័យ!";
+      resultDisplay.style.display = 'none'; // Hide results on failure
+    })
+    .finally(() => {
+      // Re-enable the submit button
+      submitBtn.disabled = false;
+      submitBtn.textContent = "រក្សាទុក";
+    });
+  });
+
+  clearBtn.addEventListener("click", () => {
+    form.reset();
+    messageBox.textContent = "";
+    resultDisplay.style.display = 'none'; // Hide results on clear
+    
+    // Optional: Clear the stored data when the user clears the form
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  });
+  
+  // *** EXECUTE ON PAGE LOAD ***
+  // Check for and display previously stored data when the page loads
+  loadDataFromLocalStorage();
+
+</script>
+
+</body>
+</html>

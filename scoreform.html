@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Moul&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Battambang&family=Moul&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Add Score</title>
+<style>
+   
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f6fa;
+        margin: 0;
+        font-family: "Battambang", system-ui;
+    }
+    header {
+        position: sticky;
+        top: 0;
+        background: white;
+        padding: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 10;
+        font-family: "Battambang", system-ui;
+        
+    }
+    .container {
+        display: flex;
+        gap: 20px;
+        padding: 15px;
+        font-family: "Battambang", system-ui;
+    }
+    .panel {
+        background: white;
+        border-radius: 10px;
+        padding: 0;
+        flex: 1;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 80px);
+        
+    }
+    .student-header {
+        position: sticky;
+        top: 0;
+        background: white;
+        padding: 10px;
+        z-index: 5;
+        border-bottom: 1px solid #ddd;
+        font-family: "Battambang", system-ui;
+        display: flex;
+    }
+    .student-list {
+        height: 20px;
+        overflow-y: auto;
+        flex: 1;
+        padding: 5px;
+       
+    }
+    .student-item {
+        
+         display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 10px;
+      border-bottom: 1px solid #bbb;
+      background: #f1f1f1c2;
+      border-radius: 6px;
+      margin-bottom: 3px;
+      font-family: "Battambang", system-ui;
+      
+    }
+    .btn-blue {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+         font-family: "Battambang", system-ui;
+    }
+    .btn-gray {
+        background: #e0e0e0;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+         font-size: 1rem;
+         color: #007bff;
+          font-family: "Battambang", system-ui;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      background-color: rgb(19, 80, 54);
+      color: white;
+    }
+     
+
+    button a{
+   color: #007bff;;
+  text-decoration: none;
+}
+button a:hover{
+    color: #f5f6fa;
+}
+    .score-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+    }
+    .score-box {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    input[type="number"], input[type="text"], select {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: "Battambang", system-ui;
+        font-size: 1rem;
+    }
+    @media(max-width: 768px) {
+        .container { flex-direction: column; }
+        header { flex-wrap: wrap; }
+    }
+    
+</style>
+</head> 
+<body>
+
+<header>
+    <h3 style="margin:0;">ពិន្ទុថ្នាក់ទី៧D</h3>
+    <label>
+        <select id="monthSelect">
+           
+            <option>វិច្ឆិកា</option><option>ធ្នូ</option><option>មករា</option>
+            <option>កុម្ភៈ</option><option>ឆមាសទី១</option><option>មីនា</option>
+            <option>ឧសភា</option><option>មិថុនា</option><option>កក្កដា</option>
+            <option>ឆមាសទី២</option>
+        </select>
+    </label>
+    <label>
+        <select id="subjectQuick"></select>
+    </label>
+    <input type="" id="quickScore" placeholder="" style="width: 0px;"> 
+   <h4 id="selectedStudenth" style="padding: 0px px; margin-top: -5px; margin-bottom: -5px; overflow-y: auto; font-size: 0px; border: none;"></h4>
+     <button class="btn-blue" id="saveListScores">រក្សាទុក</button>
+
+    <!--<button class="btn-blue" id="applyQuick" >រក្សាទុក</button>-->
+   <span id="applyQuick"></span>
+    <button class="btn-gray" ><a href="https://edu-kh.github.io/student-attendant/">ស្រង់អវត្តមាន</a></button>
+    <span id="saveStatush" style="margin-left:10px;color:green;font-weight:bold;"></span>
+</header>
+
+<div class="container">
+    <!-- Student List -->
+    <div class="panel" style="flex:1;">
+        <div class="student-header">
+            <input type="text" id="searchName" placeholder="ស្វែងរកឈ្មោះសិស្ស..." style="margin-bottom:5px;">
+           <button class="btn-blue" id="reloadBtn" style="margin-top:5px;">Reload</button>
+        </div>
+        <div id="studentList" class="student-list"></div>
+    </div>
+
+    <!-- Score Editor -->
+   <div class="panel">
+    <div class="panel-top" style="display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #ddd;">
+        <h4 id="selectedStudent">គ្មានឈ្មោះសិស្ស</h4>
+        <div style="display:flex; gap:5px;">
+            <button class="btn-gray" id="prevStudent"><i class="fa fa-chevron-left"></i></button>
+             <div style="padding: 0px; border-top: 1px solid #ddd;">
+          
+        <button class="btn-blue" id="saveBtn">រក្សាទុក</button>
+        
+       
+    </div>
+            <button class="btn-gray" id="nextStudent"><i class="fa fa-chevron-right"></i></button>
+        </div>
+        
+    </div>
+   
+    <div style="padding: 15px; flex: 1; overflow-y: auto;">
+        <div id="scoresGrid" class="score-grid"></div>
+    </div>
+    <div style="padding: 15px; border-top: 1px solid #ddd;">
+       
+        <button class="btn-gray" id="resetBtn">សម្អាត</button>
+        <span id="saveStatus" style="margin-left:10px;color:green;font-weight:bold;"></span>
+    </div>
+</div>
+
+<script>
+const SHEET_API_BASE = 'https://script.google.com/macros/s/AKfycbyC11AUBh3VUVx2Og6vwRwZ0Jzy-rvXJOFaijQhPjFlOn_I8xNnpuEnE3yzjPn8fTA/exec';
+
+// 13 subjects
+const SUBJECTS = [
+   "តែងសេចក្តី", "តាមអាន", "សីលធម៌", "ប្រវត្តិវិទ្យា", "ភូមិវិទ្យា",
+    "គណិតវិទ្យា", "រូបវិទ្យា", "គីមីវិទ្យា","ជីវវិទ្យា", "ផែនដីវិទ្យា",
+    "អង់គ្លេស", "គេហ","បារាំង", "កីឡា", "បំណិន", "សុខភាព", "ចិន", "កុំព្យូទ័រ"
+];
+
+let currentStudent = null;
+let scores = {};
+const monthSelect = document.getElementById('monthSelect');
+
+let listScores = {};
+
+function loadStudents() {
+    document.getElementById('studentList').innerHTML = '';
+    listScores = {};
+
+    fetch(`${SHEET_API_BASE}?action=getStudents&month=${monthSelect.value}`)
+        .then(res => res.json())
+        .then(data => {
+            data.forEach(name => {
+                let div = document.createElement('div');
+                div.className = 'student-item';
+                div.innerHTML = `
+                    <span style="flex:1;">${name}</span>
+                    <input type="number" class="student-score" placeholder="ពិន្ទុ" style="width:60px; margin-right:15px;">
+                    <button class="btn-gray">ជ្រើសរើស</button>
+                `;
+
+                // Select student for right panel
+                div.querySelector('button').onclick = () => selectStudent(name);
+
+                // Track score entry
+                div.querySelector('.student-score').oninput = e => {
+                    listScores[name] = e.target.value;
+                };
+
+                document.getElementById('studentList').appendChild(div);
+            });
+        });
+}
+
+function loadStudents() {
+    const reloadBtn = document.getElementById('reloadBtn');
+    const studentListEl = document.getElementById('studentList');
+
+    // Show waiting state
+    reloadBtn.disabled = true;
+    reloadBtn.textContent = 'Loading'; // Loading...
+    studentListEl.innerHTML = '<div style="padding:10px; color:black; font-size: 1rem">កំពុងទាញឈ្មោះសិស្ស! សូមរង់ចាំ...</div>';
+
+    studentNames = [];
+    currentIndex = -1;
+
+    fetch(`${SHEET_API_BASE}?action=getStudents&month=${monthSelect.value}`)
+        .then(res => res.json())
+        .then(data => {
+            studentNames = data;
+            studentListEl.innerHTML = ''; // Clear loading text
+
+            data.forEach(name => {
+                let div = document.createElement('div');
+                div.className = 'student-item';
+                div.innerHTML = `
+                    <span style="flex:1;">${name}</span>
+                    <input type="number" class="student-score" placeholder="ពិន្ទុ" style="width:60px;">
+                    <button class="btn-gray">ជ្រើសរើស</button>
+                `;
+
+                div.querySelector('button').onclick = () => {
+                    currentIndex = studentNames.indexOf(name);
+                    selectStudent(name);
+                };
+
+                div.querySelector('.student-score').oninput = e => {
+                    listScores[name] = e.target.value;
+                };
+
+                studentListEl.appendChild(div);
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            studentListEl.innerHTML = '<div style="padding:10px; color:red;">❌ មិនអាចផ្ទុកទិន្នន័យបាន</div>';
+        })
+        .finally(() => {
+            reloadBtn.disabled = false;
+            reloadBtn.textContent = 'Reload';
+        });
+}
+
+
+document.getElementById('prevStudent').onclick = () => {
+    if (!studentNames.length) return;
+    currentIndex = currentIndex > 0 ? currentIndex - 1 : studentNames.length - 1;
+    selectStudent(studentNames[currentIndex]);
+};
+
+document.getElementById('nextStudent').onclick = () => {
+    if (!studentNames.length) return;
+    currentIndex = currentIndex < studentNames.length - 1 ? currentIndex + 1 : 0;
+    selectStudent(studentNames[currentIndex]);
+};
+
+
+async function saveListScoresMerged() {
+    const statusMsg = document.getElementById('saveStatush');
+    statusMsg.style.color = 'blue';
+    statusMsg.textContent = 'កំពុងរក្សាទុក....';
+
+    const selectedSubject = document.getElementById('subjectQuick').value;
+    if (!selectedSubject) {
+        statusMsg.style.color = 'red';
+        statusMsg.textContent = '⚠ សូមជ្រើសរើសមុខវិជ្ជាមុន!';
+        return;
+    }
+
+    // Get all scores for the month once
+    let allScores = {};
+    try {
+        let res = await fetch(`${SHEET_API_BASE}?action=getAllScores&month=${monthSelect.value}`);
+        let data = await res.json();
+        allScores = data || {};
+    } catch (err) {
+        console.error("Failed to fetch all scores", err);
+        statusMsg.style.color = 'red';
+        statusMsg.textContent = '❌ មិនអាចទាញទិន្នន័យបាន!';
+        return;
+    }
+
+    // Collect updated scores from list
+    let updatedScores = {};
+    document.querySelectorAll('.student-item').forEach(item => {
+        let studentName = item.querySelector('span').textContent.trim();
+        let scoreValue = item.querySelector('.student-score').value.trim();
+        if (scoreValue !== '') {
+            if (!allScores[studentName]) allScores[studentName] = {};
+            allScores[studentName][selectedSubject] = scoreValue;
+            updatedScores[studentName] = allScores[studentName];
+        }
+    });
+
+    if (Object.keys(updatedScores).length === 0) {
+        statusMsg.style.color = 'red';
+        statusMsg.textContent = '⚠ មិនមានពិន្ទុសម្រាប់រក្សាទុក!';
+        return;
+    }
+
+    // Save all updates in one request
+    try {
+        await fetch(`${SHEET_API_BASE}?action=saveScoresBatch&month=${monthSelect.value}`, {
+            method: 'POST',
+            body: JSON.stringify(updatedScores)
+        });
+        statusMsg.style.color = 'green';
+        statusMsg.textContent = '✅ រក្សាទុកពិន្ទុរួចរាល់!';
+        document.querySelectorAll('.student-score').forEach(input => input.value = '');
+    } catch (err) {
+        console.error(err);
+        statusMsg.style.color = 'red';
+        statusMsg.textContent = '❌ ការរក្សាទុកបរាជ័យ!';
+    }
+
+    setTimeout(() => statusMsg.textContent = '', 2000);
+}
+
+
+
+
+
+
+document.getElementById('saveListScores').onclick = saveListScoresMerged;
+
+
+monthSelect.onchange = () => {
+    loadStudents();
+    document.getElementById('selectedStudent').textContent = 'គ្មានឈ្មោះសិស្ស';
+    currentStudent = null;
+    scores = {};
+    renderScores();
+};
+
+function selectStudent(name) {
+    
+    currentStudent = name;
+    document.getElementById('selectedStudenth').textContent = name;
+    document.getElementById('selectedStudent').textContent = name;
+    scores = {};
+   
+    // Clear quick score box when selecting another student
+    document.getElementById('quickScore').value = '';
+    
+    renderScores();
+    fetch(`${SHEET_API_BASE}?action=getScores&month=${monthSelect.value}&studentName=${encodeURIComponent(name)}`)
+        .then(res => res.json())
+        .then(data => {
+            scores = data.scores || {};
+            renderScores();
+        });
+}
+
+
+function renderScores() {
+    let grid = document.getElementById('scoresGrid');
+    grid.innerHTML = '';
+    SUBJECTS.forEach(sub => {
+        let div = document.createElement('div');
+        div.className = 'score-box';
+        div.innerHTML = `<label>${sub}</label><input type="number" value="${scores[sub] || ''}">`;
+        div.querySelector('input').oninput = e => scores[sub] = e.target.value;
+        grid.appendChild(div);
+    });
+}
+
+
+function saveToSheet() {
+    const btn = document.getElementById('saveBtn');
+    
+    const statusMsg = document.getElementById('saveStatus');
+      const statusMsgh = document.getElementById('saveStatush');
+
+    if (!currentStudent) {
+        btn.textContent = 'មិនទាន់ជ្រើសសិស្ស!';
+       
+        btn.style.backgroundColor = '#e74c3c'; // red
+         
+         
+        setTimeout(() => {
+            btn.textContent = 'រក្សាទុក';
+            btn.style.backgroundColor = ''; // reset
+             
+            
+           
+        }, 1500);
+        return;
+    }
+       btn.disabled = true;
+    statusMsg.style.color = 'green';
+    statusMsg.textContent = 'រក្សាទុករួចរាល់';
+    statusMsgh.style.color = 'green';
+    statusMsgh.textContent = 'រក្សាទុករួចរាល់';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        statusMsg.textContent = '';
+         statusMsgh.textContent = '';
+    }, 1500);
+        document.getElementById('quickScore').value = '';
+    // Instant save feedback
+    btn.textContent = 'រក្សាទុក';
+    btn.disabled = true;
+
+    // Send to Google Sheet in background
+    fetch(`${SHEET_API_BASE}?action=saveScores&month=${monthSelect.value}`, {
+        method: 'POST',
+        body: JSON.stringify({ studentName: currentStudent, scores })
+    }).catch(() => {
+        console.error('Save failed');
+    });
+
+    // Reset button quickly
+    setTimeout(() => {
+        btn.textContent = 'រក្សាទុក';
+        btn.disabled = false;
+    }, 500);
+}
+
+
+
+document.getElementById('applyQuick').onclick = () => {
+    let sub = document.getElementById('subjectQuick').value;
+    let val = document.getElementById('quickScore').value;
+    scores[sub] = val;
+    renderScores();
+    saveToSheet(); // Auto save after quick score entry
+};
+
+document.getElementById('saveBtn').onclick = saveToSheet;
+
+document.getElementById('resetBtn').onclick = () => {
+    scores = {};
+    renderScores();
+};
+
+document.getElementById('reloadBtn').onclick = loadStudents;
+
+document.getElementById('searchName').oninput = e => {
+    let term = e.target.value.toLowerCase();
+    [...document.getElementById('studentList').children].forEach(div => {
+        div.style.display = div.textContent.toLowerCase().includes(term) ? '' : 'none';
+    });
+};
+
+// Fill quick subject dropdown
+const subjectQuickSelect = document.getElementById('subjectQuick');
+subjectQuickSelect.innerHTML = SUBJECTS.map(s => `<option>${s}</option>`).join("");
+
+loadStudents();
+renderScores();
+
+
+
+
+</script>
+</body>
+</html>

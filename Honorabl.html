@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Honorable Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Moul&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Battambang&family=Moul&display=swap" rel="stylesheet">
+<link href="Style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <style>
+      
+        
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div id="sidebar-backdrop" onclick="toggleSidebar()" 
+         class="fixed inset-0 bg-black/50 lg:hidden">
+    </div>
+
+    <div id="main-layout" class="flex h-screen w-full">
+
+        <div id="sidebar" class="bg-[--sidebar-color] text-gray-300 w-64 h-full space-y-4 flex flex-col p-4">
+            
+            <div class="py-4 px-2 text-xl font-bold text-white border-b border-gray-700/50">
+                © MR. PIN KOY
+            </div>
+
+            <button onclick="toggleSidebar()" class="lg:hidden absolute top-4 right-4 text-white hover:text-red-400 z-50">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <nav class="flex-grow space-y-1 overflow-y-auto">
+                <a href="index.html" data-target="dashboard" class="sidebar-link  flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="layout-dashboard" class="icon w-5 h-5 mr-3"></i>
+                    Dashboard
+                </a>
+
+                <div id="students-dropdown-parent">
+                    <button onclick="toggleDropdown('students-dropdown')" 
+                            class="sidebar-link w-full text-left flex justify-between items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                        <span class="flex items-center">
+                            <i data-lucide="users" class="icon w-5 h-5 mr-3"></i>
+                            Students
+                        </span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200" id="students-dropdown-icon"></i>
+                    </button>
+                    
+                  <div id="students-dropdown" class="pl-6 space-y-1 hidden">
+                        <!--  <a href="#" onclick="setActiveLink(event); showContent('default-view');" data-target="students-list" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="list-checks" class="icon w-5 h-5 mr-3"></i>
+                            Student List
+                        </a> -->
+                        <a href="Stdenlist.html"  data-target="add-student" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="list-checks" class="icon w-5 h-5 mr-3"></i>
+                            Student List
+                        </a>
+                        <a href="scoreform.html" target="_blank" data-target="add-score" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="clipboard-list" class="icon w-5 h-5 mr-3"></i>
+                            Add Score
+                        </a>
+                        <a href="Attendance.html" target="_blank" data-target="add-attendance" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                            <i data-lucide="clipboard-check" class="icon w-5 h-5 mr-3"></i>
+                            Add Attendance
+                        </a>
+                    </div>
+                </div>
+                <a href="#" onclick="setActiveLink(event)" data-target="attendance" class="sidebar-link active flex items-center p-3 text-sm font-medium rounded-lg transition duration-150">
+                    <i data-lucide="trophy" class="icon w-5 h-5 mr-3"></i>
+                    Honorable Chart
+                </a>
+
+                <a href="Result.html"  class="sidebar-link flex  items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="graduation-cap" class="icon w-5 h-5 mr-3"></i>
+                    Results 
+                </a>
+                <a href="Report.html"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="bar-chart-3" class="icon w-5 h-5 mr-3"></i>
+                   Report Attendance
+                </a>
+             <!--  <a href="#"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="book-open-text" class="icon w-5 h-5 mr-3"></i>
+                    Subjects Plan
+                </a> v--> 
+               <!-- CLASS PLAN DROPDOWN -->
+    <div id="classplan-dropdown-parent" class="mt-1">
+      <button onclick="toggleDropdown('classplan-dropdown')" 
+        class="sidebar-link w-full text-left flex justify-between items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+
+        <span class="flex items-center">
+            <i data-lucide="pencil" class="icon w-5 h-5 mr-3"></i>
+            Class Plan
+        </span>
+
+        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"
+           id="classplan-dropdown-icon"></i>
+     </button>
+
+     <div id="classplan-dropdown" class="pl-6 space-y-1 hidden">
+        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/edit?usp=sharing" target="_blank" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+            <i class="fa-solid fa-table icon w-5 h-5 mr-3"></i>
+            Sheet
+        </a>
+
+        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/export?format=pdf&size=A4&portrait=true&fitw=true&top_margin=0.25&bottom_margin=0.25&left_margin=0.25&right_margin=0.25&horizontal_alignment=CENTER&vertical_alignment=MIDDLE&gridlines=false&printtitle=false&sheetnames=false&pagenumbers=false"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+            <i class="fa-regular fa-file-pdf icon w-5 h-5 mr-3"></i>
+            Get PDF
+        </a>
+    </div>
+</div>
+                <a href="https://docs.google.com/spreadsheets/d/1kHfumXIbIyauIPgZeaJy5n_wtQWG9qy5INqO7PsaDN0/edit?usp=sharing" target="_blank" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                    <i data-lucide="sheet" class="icon w-5 h-5 mr-3"></i>
+                    Sheets
+                </a>
+               
+                
+            </nav>
+        </div>
+
+        <div id="main-content" class="flex-grow flex flex-col overflow-hidden">
+            
+            <header id="header" class="bg-white shadow-md p-4 flex justify-between items-center lg:pl-8">
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-600 hover:text-gray-900">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <h1 class="hidden lg:block text-2xl font-semibold text-gray-800" id="main-header-title">Results</h1>
+                <div class="flex-grow lg:flex-grow-0"></div> <div class="text-sm text-gray-600 font-medium flex items-center space-x-1 ml-auto">
+                  <p>ថ្នាក់ទី </p>  <span id="grage-name">....</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+            </header>
+
+            <main id="content-area" class="p-4 sm:p-6 lg:p-8 flex-grow overflow-y-auto">
+
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800 block lg:hidden mb-3 sm:mb-0" id="mobile-header-title">Results</h2>
+                
+                </div>
+
+             
+
+                <div id="dashboard-view" class="space-y-8">
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
+                        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200 flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Students</p>
+                                <p id="stat-total" class="text-3xl font-semibold text-gray-900 mt-1">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                                <i data-lucide="users-2" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200 flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Female Students</p>
+                                <p id="stat-female" class="text-3xl font-semibold text-gray-900 mt-1">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-pink-100 text-pink-600">
+                                <i data-lucide="person-standing" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-xl shadow-lg border border-gray-200 flex items-center justify-between Teacher-name">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">គ្រូបន្ទុកៈ</p>
+                                  <p id="teacher-name">Loading...</p>
+
+                            </div>
+                            <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                                <i data-lucide="User" class="w-6 h-6"></i>
+                            </div>
+                        </div>
+
+                        
+                        </div>
+                   
+                </div>
+                <div id="default-view" class="hidden bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-gray-200">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 border-b pb-3 hidden lg:block">Student List</h3>
+             </div>
+             
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span style="color:rgb(28, 2, 132)" >November</span>
+                <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>
+                </div>
+
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(87, 3, 27)">December</span>
+                <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+                  
+               
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(123, 66, 1)">January</span>
+                 <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>        
+                
+                
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(0, 121, 128)">February</span>
+                 <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+
+                
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(164, 3, 86)">Semester 1</span>
+                <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+
+                
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(1, 6, 150)">March</span>
+                 <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+
+                
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(117, 1, 148)">May</span>
+                <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+
+                
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(38, 189, 0)">June</span>
+                 <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+
+                
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(178, 140, 1)">July</span>
+                 <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+
+                
+                <div class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">
+                <span  style="color:rgb(166, 2, 185)">Semester 2</span>
+                 <button onclick="window.open('https://script.google.com/macros/s/AKfycby5L5yEXHc5y8pYqaEPF1WAmlHCnPCUUAw6mojghCVE3pvrYWc3IJhlVon2GHh_MY3ZxQ/exec', '_blank')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get PDF</button>
+                 <button onclick="window.open('https://docs.google.com/spreadsheets/d/1SmFzivccETuv313_CeL5MnLNB65LtOeS250fcBT_IiE/export?format=pdf&gid=1166324804&gridlines=false&fzr=false', '')" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4">Get Excel</button>                </div>       
+
+
+                
+                
+
+                <div id="iframe-form" class="hidden w-full bg-white rounded-xl shadow-lg border border-gray-200">
+                    
+                </div>
+                </main>
+        </div>
+
+    </div>
+
+
+<script>
+// Mock function for "Print Sheet" (using window.open is preferred over the function)
+// function printSheet() {
+//   window.open("https://docs.google.com/spreadsheets/d/1-mgjZSvvT6UgR3qnSCN10xi5shj39F81XzRNVCxG6xA/edit?gid=0#gid=0");
+// }
+</script>
+
+<script>
+       const WEB_APP_URL_POST = 'https://script.google.com/macros/s/AKfycbz5eSzEkozWjpXsw27HDOLZ0x9BVrku5Kk2FzlqvmnLLtwmz9aWf5zR4i9D65SHi74k8g/execs';
+const FETCH_DATA_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5eSzEkozWjpXsw27HDOLZ0x9BVrku5Kk2FzlqvmnLLtwmz9aWf5zR4i9D65SHi74k8g/exec';
+
+
+window.onload = function () {
+lucide.createIcons();
+showContent('dashboard-view');
+loadTeacherName(); // <-- FIXED
+};
+
+
+async function loadTeacherName() {
+try {
+const res = await fetch(FETCH_DATA_WEB_APP_URL);
+const data = await res.json();
+
+
+console.log('Teacher Load:', data);
+
+
+if (data.teacherName) {
+document.getElementById("teacher-name").textContent = data.teacherName;
+} else {
+document.getElementById("teacher-name").textContent = "N/A";
+}
+
+
+} catch (err) {
+document.getElementById("teacher-name").textContent = "Load Error";
+}
+}
+
+        // --- Utility Functions ---
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-open');
+        }
+
+        function showModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function hideModal(id) {
+            document.getElementById(id).style.display = 'none';
+            // If hiding edit modal, refresh the list
+            if (id === 'editStudentModal') {
+                // If we are currently on the student list view, refresh it
+                if (document.getElementById('default-view').classList.contains('hidden') === false) {
+                    fetchStudentList();
+                } else {
+                    // Always refresh stats, as changes affect the count
+                    fetchStudentStats();
+                }
+            }
+        }
+        
+        // --- Teacher Grade Fetch Function ---
+
+      
+
+        /**
+         * Toggles the visibility of a sidebar dropdown menu and rotates the icon.
+         * @param {string} dropdownId - The ID of the dropdown content container (e.g., 'students-dropdown').
+         */
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            const icon = document.getElementById(`${dropdownId}-icon`);
+            
+            if (dropdown.classList.contains('hidden')) {
+                // Open the dropdown
+                dropdown.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                // Close the dropdown
+                dropdown.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+            lucide.createIcons();
+        }
+
+        // --- Stats Calculation (Updated) ---
+
+       // ... (Lines 359 - 389 remain the same)
+        /**
+         * Fetches the student list and calculates/displays dashboard statistics.
+         */
+       /**
+ * Fetches the student list and calculates/displays dashboard statistics.
+ */
+async function fetchStudentStats() {
+    // Display loading state
+    document.getElementById('stat-total').textContent = '...';
+    document.getElementById('stat-female').textContent = '...';
+    document.getElementById('grage-name').textContent = 'Loading...'; 
+    
+    try {
+        const response = await fetch(FETCH_DATA_WEB_APP_URL);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            const students = data.data;
+            
+            // Note: 'sex' is the key from your Apps Script HEADERS
+            const totalStudents = students.length;
+            
+            // 🐛 FIX APPLIED HERE: Must check for both values explicitly
+            const femaleStudents = students.filter(s => 
+                s.sex && (s.sex.toLowerCase() === 'ស' || s.sex.toLowerCase() === 'ស្រី')
+            ).length;
+            
+            // Update DOM
+            document.getElementById('stat-total').textContent = totalStudents;
+            document.getElementById('stat-female').textContent = femaleStudents;
+            
+            // Display the systemGrade from the Apps Script response
+            document.getElementById('grage-name').textContent = data.systemGrade || 'N/A.'; 
+            
+        } else {
+            console.error('Error fetching stats:', data.message);
+            document.getElementById('stat-total').textContent = 'Error';
+            document.getElementById('stat-female').textContent = 'Error';
+            document.getElementById('grage-name').textContent = 'Error'; 
+        }
+
+    } catch (error) {
+        console.error('Network error loading stats:', error);
+        document.getElementById('stat-total').textContent = 'Fail';
+        document.getElementById('stat-female').textContent = 'Fail';
+        document.getElementById('grage-name').textContent = 'Fail'; 
+    }
+}
+// ... (The rest of your script remains the same)
+
+        /**
+         * Deletes a student record after confirmation.
+         * NOTE: This function needs a specific 'ID' or unique identifier, which your current Apps Script
+         * does not automatically generate/return. We use the row index (index + 1) for visual reference 
+         * in the table, but this is unreliable for deletion without a true ID field in the sheet.
+         * @param {string} studentId The index (row number) of the student to delete.
+         */
+        async function deleteStudent(studentId) {
+            // Using a simple window.prompt for confirmation
+            const confirmed = window.prompt(`Type DELETE to confirm you want to delete student ID ${studentId}. This cannot be undone.`);
+            if (confirmed !== 'DELETE') {
+                return;
+            }
+
+            // The deletion logic below will fail unless you update your Apps Script to:
+            // 1. Add a unique ID to the sheet when the record is created.
+            // 2. Implement logic in doPost to handle {action: 'delete', ID: studentId}.
+            
+            window.alert('⚠️ Deletion is not yet implemented in the Apps Script backend. You must add the doPost logic to handle "action: delete".');
+            return; // Exit here until backend is updated.
+        }
+
+
+        /**
+         * Initiates the Edit process: retrieves student data and displays the form in a modal.
+         * NOTE: Your Apps Script does not currently contain 'update' logic.
+         * @param {Object} studentData - The full data object of the student to edit.
+         */
+        function editStudent(studentData) {
+            window.alert('⚠️ Editing is not yet implemented in the Apps Script backend. You must add the doPost logic to handle "action: update".');
+            return; // Exit here until backend is updated.
+        }
+
+
+        /**
+         * Fetches the student list from the Google Apps Script Web App and populates the table.
+         */
+        async function fetchStudentList() {
+            const tbody = document.getElementById('student-list-tbody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="text-center py-8 text-gray-500">
+                        <i data-lucide="loader-circle" class="w-8 h-8 mx-auto text-indigo-500 mb-2 animate-spin"></i>
+                        Fetching student data...
+                    </td>
+                </tr>
+            `;
+            lucide.createIcons();
+            
+            try {
+                const response = await fetch(FETCH_DATA_WEB_APP_URL);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    const students = data.data;
+                    if (students.length === 0) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center py-8 text-gray-500">
+                                    <i data-lucide="info" class="w-6 h-6 mx-auto text-gray-500 mb-2"></i>
+                                    No student records found in the sheet.
+                                </td>
+                            </tr>
+                        `;
+                    } else {
+                        // Dynamically generate rows, mapping Apps Script keys (name, dob, grade, etc.)
+                        tbody.innerHTML = students.map((student, index) => `
+                            <tr class="hover:bg-gray-50 transition duration-150">
+                                <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${index + 1}</td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">${student.name || '-'}</td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.grade || '-'}</td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.dob || '-'}</td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.phone || '-'}</td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${student.sex || '-'}</td>
+                                <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button onclick='editStudent(${JSON.stringify(student)})' class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                        <i data-lucide="pencil" class="w-4 h-4 inline-block align-text-bottom"></i> Edit
+                                    </button>
+                                    <button onclick="deleteStudent('${index + 1}')" class="text-red-600 hover:text-red-900">
+                                        <i data-lucide="trash" class="w-4 h-4 inline-block align-text-bottom"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        `).join('');
+                    }
+                } else {
+                    throw new Error(data.message || 'Error fetching data from script.');
+                }
+
+            } catch (error) {
+                console.error('Error loading student list:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-red-600">
+                            <i data-lucide="alert-triangle" class="w-8 h-8 mx-auto mb-2"></i>
+                            Failed to load data. Check console (F12) for details.
+                        </td>
+                    </tr>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // --- View Switching Functions (No change needed) ---
+        
+        function showContent(contentId) {
+            const views = {
+                'dashboard-view': document.getElementById('dashboard-view'),
+                'default-view': document.getElementById('default-view'),
+                'iframe-form': document.getElementById('iframe-form')
+            };
+            
+            const mainHeaderTitle = document.getElementById('main-header-title');
+            const mobileHeaderTitle = document.getElementById('mobile-header-title');
+            
+            // Hide all views
+            Object.values(views).forEach(view => view.classList.add('hidden'));
+
+            // Show the requested view
+            const targetView = views[contentId];
+            if (targetView) {
+                targetView.classList.remove('hidden');
+            }
+
+            // Update headers and trigger data fetch
+            if (contentId === 'iframe-form') {
+                mainHeaderTitle.textContent = 'Add New Student';
+                mobileHeaderTitle.textContent = 'Add New Student';
+                // Set the iframe source if not already set
+                document.getElementById('studentIframe').src = IFRAME_FORM_URL;
+            } else if (contentId === 'default-view') {
+                mainHeaderTitle.textContent = 'Student List';
+                mobileHeaderTitle.textContent = 'Student List';
+                fetchStudentList(); // Load data for list
+            } else if (contentId === 'dashboard-view') {
+                mainHeaderTitle.textContent = 'Honorable Chart';
+                mobileHeaderTitle.textContent = 'Honorable Chart';
+                fetchStudentStats(); // Load data for stats
+            }
+            lucide.createIcons();
+        }
+
+
+        function setActiveLink(event) {
+            event.preventDefault();
+            const links = document.querySelectorAll('.sidebar-link');
+            links.forEach(link => {
+                // Ensure only direct links (A tags) are checked for 'active' status removal
+                if (link.tagName === 'A') {
+                     link.classList.remove('active');
+                }
+                // Also remove 'active' from the dropdown button
+                if (link.tagName === 'BUTTON' && link.closest('#students-dropdown-parent')) {
+                    link.classList.remove('active');
+                }
+            });
+            
+            const clickedElement = event.currentTarget;
+            
+            // 1. Set the clicked link/button as active
+            clickedElement.classList.add('active');
+
+            // 2. If a link inside the 'Students' dropdown was clicked, make the parent button active too.
+            const dropdownParent = document.getElementById('students-dropdown-parent');
+            if (clickedElement.tagName === 'A' && dropdownParent.contains(clickedElement)) {
+                const dropdownButton = dropdownParent.querySelector('button');
+                if (dropdownButton) {
+                    dropdownButton.classList.add('active');
+                }
+            }
+
+            // 3. Handle closing the sidebar on mobile and ensure content switching
+            if (document.body.classList.contains('sidebar-open')) {
+                toggleSidebar();
+            }
+        }
+
+        // QR Share
+const textToCopy = document.getElementById('textToCopy');
+        const copyButton = document.getElementById('copyButton');
+        const downloadButton = document.getElementById('downloadButton');
+        const displayImage = document.getElementById('displayImage');
+        const statusMessage = document.getElementById('statusMessage');
+
+        // Function to display status messages temporarily
+        function showStatus(message, isError = false) {
+            statusMessage.textContent = message;
+            statusMessage.style.color = isError ? '#dc2626' : '#059669'; /* Use standard CSS colors */
+            
+            // Clear the message after 3 seconds
+            clearTimeout(window.statusTimer);
+            window.statusTimer = setTimeout(() => {
+                statusMessage.textContent = '';
+                statusMessage.style.color = '#059669'; // Reset to default green
+            }, 3000);
+        }
+
+        // --- Clipboard Copy Logic ---
+      // --- Clipboard Copy Logic (Updated) ---
+        function copyText() {
+            // 1. Get the text to copy from the textarea
+            const text = textToCopy.value; 
+
+            // 2. Use the modern Clipboard API
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        showStatus('Content copied successfully!');
+                    })
+                    .catch(err => {
+                        showStatus('Copying failed: ' + err.message, true);
+                        console.error('Modern Clipboard API failed:', err);
+                        
+                        // Fallback to execCommand if the modern API fails
+                        fallbackCopy();
+                    });
+            } else {
+                // 3. Fallback for older browsers (document.execCommand)
+                fallbackCopy();
+            }
+        }
+        
+        // Helper function for the deprecated fallback
+        function fallbackCopy() {
+            try {
+                // Ensure the textarea is selected
+                textToCopy.select();
+                textToCopy.setSelectionRange(0, 99999); // For mobile devices
+                
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showStatus('Content copied successfully (via fallback)!');
+                } else {
+                    showStatus('Copying failed: Command unsuccessful.', true);
+                }
+            } catch (err) {
+                showStatus('Copying failed: No clipboard access.', true);
+                console.error('Fallback copy failed:', err);
+            }
+        }
+        // --- Image Download Logic (Updated for cross-origin reliability) ---
+        async function handleDownload() {
+            const imageUrl = displayImage.src;
+            const fileName = 'downloaded-asset.png';
+
+            showStatus('Preparing download...');
+
+            try {
+                // 1. Fetch the image data
+                const response = await fetch(imageUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const imageBlob = await response.blob();
+                
+                // 2. Create a blob URL
+                const blobUrl = URL.createObjectURL(imageBlob);
+                
+                // 3. Create a temporary anchor element
+                const link = document.createElement('a');
+                
+                // 4. Set the link attributes
+                link.href = blobUrl;
+                link.download = fileName; 
+                link.style.display = 'none';
+
+                // 5. Append to body, programmatically click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // 6. Clean up the blob URL
+                URL.revokeObjectURL(blobUrl);
+
+                showStatus('Image download initiated successfully!');
+            } catch (error) {
+                showStatus('Download failed. Check console for details.', true);
+                console.error('Download error:', error);
+            }
+        }
+copyButton.addEventListener('click', copyText);
+
+        // Attach the event listeners
+        async function loadTeacherName() {
+  try {
+      const url = "https://script.google.com/macros/s/AKfycbz5eSzEkozWjpXsw27HDOLZ0x9BVrku5Kk2FzlqvmnLLtwmz9aWf5zR4i9D65SHi74k8g/exec";  // IMPORTANT
+      const res = await fetch(url);
+      const data = await res.json();
+
+      console.log(data); // DEBUG – see full response
+
+      if (data.teacherName) {
+          document.getElementById("teacher-name").textContent = data.teacherName;
+      } else {
+          document.getElementById("teacher-name").textContent = "Teacher's Name";
+      }
+
+  } catch (err) {
+      document.getElementById("teacher-name").textContent = "Load Error";
+  }
+}
+
+       </script>
+   
+</body>
+</html>

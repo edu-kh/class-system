@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Moul&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Battambang&family=Moul&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Add Attendance</title>
+  <style>
+    :root {
+      --primary: #1976d2;
+      --light: rgb(216, 236, 253);
+      --text: #333;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--light);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+      font-family: "Battambang", system-ui;
+    }
+
+    .header, .footer {
+      padding: 5px;
+      background: rgb(223, 243, 254);
+      position: sticky;
+      z-index: 10;
+    }
+
+    .header {
+      top: 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .footer {
+      bottom: 0;
+      border-top: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .header h2 {
+      margin: 0 0 5px;
+      color: var(--primary);
+      text-align: center;
+      font-family: "Battambang", system-ui;
+      font-size: 1.2rem;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+     
+    }
+
+    .controls input {
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+       
+    }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      background: #eaf3fc;
+      
+    }
+
+    .student-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      border-bottom: 1px solid #bbb;
+      background: #f1f1f1c2;
+      border-radius: 6px;
+      margin-bottom: 3px;
+      font-family: "Battambang", system-ui;
+    }
+
+    .student-name {
+      font-size: 1rem;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 10px;
+    }
+  #search{
+    font-family: "Battambang", system-ui;
+    background-color: #f1f1f1c2;
+    
+  }
+
+  input::placeholder,
+textarea::placeholder {
+  color: #484646; /* Light gray */
+  opacity: 1;  /* Make sure it doesn't look faded */
+}
+  
+  #dateInput{
+    background-color: #f1f1f1c2;
+      border-radius: 6px;
+  }
+    .radio-group input[type="radio"] {
+      accent-color: var(--primary);
+    }
+
+    .footer  button {
+    text-align: center;
+    padding-top: 20px;
+    padding-left: 20px;
+    margin-bottom: 5px;
+    display: flex;
+  border-radius: 50%;              /* makes it a circle */
+  width: 60px;
+  height: 60px;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: 0 4px #2e7d32;       /* 3D shadow */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+}
+
+.scorebtn{
+margin-left: 5px;
+ align-items: end;
+   border-radius: 15px;
+   padding: 8px 6px;
+   background: linear-gradient(to bottom, #276529, #296d2b); /* green 3D effect */
+    font-family: "Battambang", system-ui;
+    font-size: 0.9rem;
+}
+button a{
+   color: #eaf3fc;
+  text-decoration: none;
+}
+button:active {
+  box-shadow: 0 2px #2e7d32;
+  transform: translateY(2px);      /* pressed down effect */
+}
+    
+
+    #submitBtn {
+     background: linear-gradient(to bottom, #276529, #296d2b); /* green 3D effect */
+     margin-left: 10px;
+    }
+
+    #resetBtn {
+     background: linear-gradient(to bottom, #92836f, #605d48); /* green 3D effect */
+     margin-right: 10px;
+    }
+    button:hover {
+      transform: translateY(-2px);
+    }
+   @media (max-width: 600px) {
+  .student-row {
+    flex-direction: row;         /* 🟢 Make it stay in row layout */
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+  }
+.fa-regular{
+  display: flex;
+  
+}
+  .student-name {
+    margin: 0;
+    padding: 0;
+  }
+
+  .radio-group {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 10px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>សម្រង់អវត្តមានថ្នាក់ទី៧D👨‍💻</h2>
+      <div class="controls">
+       <div > <input type="date" id="dateInput" />
+        <button class="scorebtn" ><a href="https://edu-kh.github.io/score/">សម្រង់ពិន្ទុ</a></button></div>
+        <input type="text" id="search" placeholder="ស្វែងរកឈ្មោះសិស្ស..." oninput="filterStudents()" />
+      </div>
+    </div>
+
+    <div id="student-list" class="content"></div>
+
+    <div class="footer">
+      <button id="resetBtn" onclick="resetForm()"><i class="fa-solid fa-arrows-rotate"></i></button>
+      <button id="submitBtn" onclick="submitForm()"><i class="fa-regular fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxjcxLnOVeX4LsYq_pf7KOsJfKDsDsUkhsrL5xybBCha6HMBDGu8Pz1aDV2yF6ts9-W/exec'; // Replace this with your actual URL
+    let students = [];
+    let filteredStudents = [];
+
+    function getMonthFromDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleString('en-US', { month: 'long' }); // Ex: January
+    }
+
+   async function loadStudents(date) {
+  const month = getMonthFromDate(date);
+  const container = document.getElementById('student-list');
+  
+  // Show loading message
+  container.innerHTML = `
+    <div class="loading">
+      <div class="spinner"></div> កំពុងទាញឈ្មោះសិស្ស​ សូមរង់ចាំ...
+    </div>
+  `;
+
+  try {
+    const res = await fetch(`${scriptURL}?month=${month}`);
+    students = await res.json();
+    filteredStudents = [...students];
+    renderStudents();
+  } catch (e) {
+    container.innerHTML = '<div class="loading">❌ មិនអាចទាញសិស្សបានទេ</div>';
+  }
+}
+
+    function renderStudents() {
+      const container = document.getElementById('student-list');
+      container.innerHTML = '';
+      filteredStudents.forEach((student, index) => {
+        const row = document.createElement('div');
+        row.className = 'student-row';
+        const group = `attend-${index}`;
+        row.innerHTML = `
+          <div class="student-name">${student.name}</div>
+          <div class="radio-group">
+            <label><input type="radio" name="${group}" value="P"> P</label>
+            <label><input type="radio" name="${group}" value="A"> A</label>
+          </div>
+        `;
+
+        // Allow unchecking radio
+        row.querySelectorAll(`input[name="${group}"]`).forEach((input) => {
+          input.addEventListener('click', function () {
+            if (this.dataset.checked === 'true') {
+              this.checked = false;
+              this.dataset.checked = 'false';
+            } else {
+              row.querySelectorAll(`input[name="${group}"]`).forEach(r => r.dataset.checked = 'false');
+              this.dataset.checked = 'true';
+            }
+          });
+        });
+
+        container.appendChild(row);
+      });
+    }
+
+    function filterStudents() {
+      const keyword = document.getElementById('search').value.toLowerCase();
+      filteredStudents = students.filter((s) => s.name.toLowerCase().includes(keyword));
+      renderStudents();
+    }
+
+    function resetForm() {
+      document.getElementById('search').value = '';
+      document.getElementById('dateInput').valueAsDate = new Date();
+      filteredStudents = [...students];
+      renderStudents();
+    }
+
+    async function submitForm() {
+      const date = document.getElementById('dateInput').value;
+      const month = getMonthFromDate(date);
+      const day = new Date(date).getDate();
+      const data = [];
+
+      let count = 0;
+      filteredStudents.forEach((student, i) => {
+        const radios = document.getElementsByName(`attend-${i}`);
+        let status = '';
+        radios.forEach((r) => {
+          if (r.checked) status = r.value;
+        });
+        if (status) count++;
+        data.push({ name: student.name, status });
+      });
+
+      if (count === 0) {
+        alert('សូមជ្រើសអវត្តមានសិន!');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+     submitBtn.innerHTML = ' <i class="fa-solid fa-hourglass"></i>';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          body: JSON.stringify({ month, day, attendance: data }),
+        });
+        const result = await response.text();
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+         resetForm();
+        setTimeout(() => {
+         submitBtn.innerHTML = '<i class="fa-regular fa-paper-plane"></i>';
+          submitBtn.disabled = false;
+        }, 2000);
+      } catch (e) {
+        alert('បញ្ចូនមិនបាន');
+        submitBtn.textContent = 'Submit';
+        submitBtn.disabled = false;
+      }
+    }
+
+    window.onload = () => {
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
+      document.getElementById('dateInput').value = todayStr;
+      loadStudents(todayStr);
+    };
+
+    document.getElementById('dateInput').addEventListener('change', (e) => {
+      loadStudents(e.target.value);
+    });
+  </script>
+</body>
+</html>

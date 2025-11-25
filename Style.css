@@ -1,0 +1,247 @@
+  /* Custom font setup */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        :root {
+            --sidebar-color: #2c3e50;
+            --active-color: #10b981;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+           
+            height: 100vh;
+        }
+
+        /* --- Custom Responsive Logic (Controlled by JS) --- */
+
+        /* 1. Sidebar starts off-screen on mobile/tablet */
+        #sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            position: fixed;
+            z-index: 50; 
+        }
+        
+        /* 2. Backdrop starts hidden */
+        #sidebar-backdrop {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 40; 
+        }
+
+        /* 3. When 'sidebar-open' is applied to the body (via JS on button click): */
+        .sidebar-open #sidebar {
+            transform: translateX(0); /* Slide it in */
+        }
+
+        .sidebar-open #sidebar-backdrop {
+            opacity: 1;
+            visibility: visible; /* Show the backdrop */
+        }
+        
+        .sidebar-open {
+            overflow: hidden; /* Lock background scrolling */
+        }
+
+        /* 4. Desktop overrides (lg: breakpoint) */
+        @media (min-width: 1024px) {
+            #sidebar {
+                transform: translateX(0); /* Always visible on desktop */
+                position: relative;
+            }
+            #sidebar-backdrop {
+                display: none; /* Never show backdrop on desktop */
+            }
+            .sidebar-open {
+                overflow: hidden; 
+            }
+        }
+
+        /* --- Dashboard Styling --- */
+        .sidebar-link {
+            transition: background-color 0.15s;
+        }
+        .sidebar-link.active {
+            background-color: #3b82f6;
+            color: white;
+            border-left: 4px solid var(--active-color);
+        }
+        .sidebar-link.active .icon {
+            stroke: var(--active-color);
+        }
+        #content-area {
+            /* Height adjustment to fit the header */
+            height: calc(100vh - 4rem); 
+        }
+        /* Style the header on mobile to stick to the top */
+        #header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+             font-family: 'Inter', sans-serif, "Moul";
+            font-weight: 400;
+            font-style: normal;
+           font-size: 16px;
+        }
+        
+        /* --- Removed Profile Upload Card Styles --- 
+           
+        #profile-upload-container, 
+        #profile-upload-container:hover, 
+        #profile-image, 
+        .hide-image, 
+        #upload-icon 
+        have been removed or are now unused.
+        
+        */
+        
+        /* >>> NEW STYLES FOR THE SIMPLE PROFILE IMAGE CARD <<< */
+        .teacher-profile-card {
+             width: 100px;
+             height: 100px;
+             border-radius: 50%;
+             object-fit: cover;
+        }
+
+.student-list-font {
+    font-family: "Battambang";
+            font-weight: 400;
+            font-style: bold;
+           font-size: 26px;
+}
+#student-list-tbody{
+       font-family: 'Inter', sans-serif, "Battambang";
+            font-weight: 600;
+            font-style: bold;
+           font-size: 16px;
+}
+
+/* QR share */
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 512px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            margin-top: 1.5rem; 
+            margin-bottom: 1.5rem;
+        }
+
+        /* Spacing for sections */
+        .section {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Container for Image and Textbox side-by-side */
+        .image-text-group {
+            display: flex;
+            align-items: center; 
+            gap: 1rem; 
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        /* Image fixed size: 80px wide */
+        #displayImage {
+            width: 200px;
+            height: auto;
+            min-width: 80px;
+            object-fit: contain;
+            border-radius: 0.25rem;
+            aspect-ratio: 4/3;
+        }
+
+        /* Text Area Styling: Full width of the remaining space, 20px tall */
+        #textToCopy {
+            flex-grow: 1; 
+            height: 20px; 
+            padding: 0 0.5rem; 
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            resize: none;
+            transition: all 150ms ease-in-out;
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            line-height: 20px;
+        }
+
+        /* Button Group: Adjusted to center fixed-width buttons */
+        .button-group {
+            display: flex; 
+            justify-content: center; 
+            gap: 1rem;
+            padding-top: 0.5rem;
+        }
+
+        /* General Button Styling */
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem; 
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            color: #fff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: all 150ms ease-in-out;
+            transform: scale(1);
+            cursor: pointer;
+            
+            /* Fixed 80px width */
+          
+            max-width: 200px;
+        }
+
+        /* Download Button specific styles */
+        #downloadButton {
+            background-color: #10b981;
+        }
+        #downloadButton:hover {
+            background-color: #059669;
+            transform: scale(1.01);
+        }
+        #downloadButton:active {
+            transform: scale(0.99);
+        }
+
+        /* Copy Button specific styles */
+        #copyButton {
+            background-color: #4f46e5;
+        }
+        #copyButton:hover {
+            background-color: #4338ca;
+            transform: scale(1.01);
+        }
+        #copyButton:active {
+            transform: scale(0.99);
+        }
+
+        /* Icon: Removed margin-right as there is no text */
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0;
+        }
+
+        .status-area {
+            text-align: center;
+            height: 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-top: 1.5rem;
+        }
+
+        .Teacher-name{
+             font-family: "Battambang";
+            font-weight: 300;
+            font-style: bold;
+           font-size: 18px;
+           padding-top: 5px;
+        }
