@@ -118,6 +118,10 @@
             <i class="fa-regular fa-file-pdf icon w-5 h-5 mr-3"></i>
             Get PDF
         </a>
+        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/export?format=pdf&size=A4&portrait=true&fitw=true&top_margin=0.25&bottom_margin=0.25&left_margin=0.25&right_margin=0.25&horizontal_alignment=CENTER&vertical_alignment=MIDDLE&gridlines=false&printtitle=false&sheetnames=false&pagenumbers=false&fmcmd=12"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+            <i class="fa-regular fa-file-pdf icon w-5 h-5 mr-3"></i>
+            Get Excel
+        </a>
     </div>
 </div>
 
@@ -248,17 +252,22 @@
         <!-- 2. Control Buttons Area (Bottom, side-by-side) -->
         <div class="button-group">
             
-       <!--     Download Button (Left) - Title provides hover text  --> 
-            <button id="downloadButton" class="action-button" title="Download Image" onclick="window.open('https://drive.google.com/uc?export=download&id=1Vcq812HlaDjPXm59yLtfXzJ1fGOoK0l7&confirm=t')">
+       <!--     Download Button (Left) - Title provides hover text 
+            <button id="downloadButton" class="action-button" title="Download Image" onclick="window.open('https://drive.google.com/uc?export=download&id=1Vcq812HlaDjPXm59yLtfXzJ1fGOoK0l7')">
                 <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 QR
             </button>
-                       
-            <!-- Copy Button (Right) - Title provides hover text -->
+              <!-- Copy Button (Right) - Title provides hover text 
             <button id="copyButton" class="action-button" title="Copy Text"> 
                 <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7h2m4 0h2"></path></svg>
             Copy Link
-            </button>
+            </button>      --> 
+
+            <button id="shareBtn" class=" action-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4" ><i class="fa-solid fa-share"></i> </button>
+            <button id="copyButton" class=" action-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4"> <i class="fa-solid fa-copy"></i></button>
+            <button id="downloadButton" class=" action-button bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md transition duration-150 mt-4" onclick="window.open('https://drive.google.com/uc?export=download&id=1Vcq812HlaDjPXm59yLtfXzJ1fGOoK0l7')"><i class="fa-solid fa-download"></i></button>
+
+          
         </div>
 
         <!-- Status Message Area (centered below the buttons) -->
@@ -769,10 +778,28 @@ copyButton.addEventListener('click', copyText);
 }
 
        </script>
-   
+   <script>
+document.getElementById("shareBtn").addEventListener("click", async () => {
+    const imgSrc = document.getElementById("displayImage").src;
+
+    const response = await fetch(imgSrc);
+    const blob = await response.blob();
+    const file = new File([blob], "shared-image.jpg", { type: blob.type });
+
+    const shareData = {
+        files: [file],
+        title: "Image",
+        text: "Check out this image!"
+    };
+
+    if (navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+    } else {
+        alert("File sharing not supported on this device.");
+    }
+});
+</script>
+
    
 </body>
-
 </html>
-
-
