@@ -77,9 +77,9 @@
                 </a>
                 <a href="Report.html"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
                     <i data-lucide="bar-chart-3" class="icon w-5 h-5 mr-3"></i>
-                   Report Attendance
+                   Attendance Report 
                 </a>
-                    <!--  <a href="#"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+                <!--  <a href="#"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
                     <i data-lucide="book-open-text" class="icon w-5 h-5 mr-3"></i>
                     Subjects Plan
                 </a> v--> 
@@ -100,12 +100,16 @@
     <div id="classplan-dropdown" class="pl-6 space-y-1 hidden">
         <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/edit?usp=sharing" target="_blank" class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
             <i class="fa-solid fa-table icon w-5 h-5 mr-3"></i>
-            Sheet
+           Go Sheet
         </a>
 
-        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/export?format=pdf&size=A4&portrait=true&fitw=true&top_margin=0.25&bottom_margin=0.25&left_margin=0.25&right_margin=0.25&horizontal_alignment=CENTER&vertical_alignment=MIDDLE&gridlines=false&printtitle=false&sheetnames=false&pagenumbers=false"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/export?format=pdf&size=A4&portrait=true&fitw=true&top_margin=0.25&bottom_margin=0.25&left_margin=0.25&right_margin=0.25&horizontal_alignment=CENTER&vertical_alignment=MIDDLE&gridlines=false&printtitle=false&sheetnames=false&pagenumbers=false&fmcmd=12"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
             <i class="fa-regular fa-file-pdf icon w-5 h-5 mr-3"></i>
             Get PDF
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1z4RFJ0gAM_c0Uzil-YxM4ohxbmOKZVdjRIKBmEMQQJ0/export?format=xlsx"  class="sidebar-link flex items-center p-3 text-sm font-medium rounded-lg hover:bg-gray-700 transition duration-150">
+           <i class="fa-solid fa-sheet-plastic  icon w-5 h-5 mr-3"></i>
+            Get Excel
         </a>
     </div>
 </div>
@@ -466,9 +470,9 @@ async function fetchStudentStats() {
                             <label for="edit_sex" class="block text-sm font-medium text-gray-700">Sex</label>
                             <select id="edit_sex" name="sex"
                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
-                                <option value="ប្រុស" ${studentData.sex === 'ប្រុស' ? 'selected' : ''}>ប្រុស (Male)</option>
-                                <option value="ស្រី" ${studentData.sex === 'ស្រី' ? 'selected' : ''}>ស្រី (Female)</option>
-                                <option value="" ${!studentData.sex ? 'selected' : ''}>- Select -</option>
+                                <option value="ប" ${studentData.sex === 'ប' ? 'selected' : ''}>ប (Male)</option>
+                                <option value="ស" ${studentData.sex === 'ស' ? 'selected' : ''}>ស (Female)</option>
+                            
                             </select>
                         </div>
                         <div>
